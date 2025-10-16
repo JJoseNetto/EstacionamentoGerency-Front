@@ -50,7 +50,16 @@ export function SheetEditarVaga({ open, onOpenChange, estacionamentoId, vaga }: 
   }
 
   const handleDelete = () => {
-    deleteVagaMutation.mutate(vaga.id, { onSuccess: () => { refetch(); onOpenChange(false) } })
+    deleteVagaMutation.mutate(vaga.id, { 
+      onSuccess: () => { 
+        toast.success("Vaga removida com sucesso!")
+        refetch(); 
+        onOpenChange(false) 
+      },
+      onError: () => {
+        toast.error("Falha ao remover essa vaga!")
+      } 
+    })
   }
 
   return (

@@ -9,6 +9,7 @@ import type { TResponseEstacionamentoSchema } from "@/api/schema/estacionamento.
 import { ModalEstacionamento } from "./modals/ModalEstacionamento"
 import { UserStar } from "lucide-react"
 import { ModalAssociarUsers } from "./modals/ModalAssociarUsers"
+import { toast } from "sonner"
 
 interface DashboardListProps {
   currentUser: any
@@ -36,7 +37,14 @@ export function DashboardList({currentUser, estacionamentos} : DashboardListProp
 
   const handleConfirmDelete = () => {
     if (selectedId !== null) {
-      deleteMutation.mutate(selectedId)
+      deleteMutation.mutate(selectedId, {
+        onSuccess: () => {
+          toast.success("Estacionamento removido com sucesso!");
+        }, 
+        onError: () => {
+          toast.error("Falha ao remover esté estacionamento!");
+        }
+      })
     }
     setOpenAlert(false)
   }
